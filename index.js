@@ -7,8 +7,9 @@ add.addEventListener('click',() => {
 });
 
 
-const button = document.getElementById('button');
+const button = document.getElementById('rem');
 button.addEventListener('click', () =>{
     localStorage.removeItem('msg');
+    content.innerHTML = '';
 
 })
