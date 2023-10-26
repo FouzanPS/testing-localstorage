@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>210191601036-Embedded Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+    <style>
+        #map {
+            height: 600px;
+            width: 100%;
+        }
+  .popup-image {
+  max-width: 200px;
+    height: auto
+     }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Map With Hotspots</h1>    
+    </header>
+    <div id="map"></div>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var map = L.map('map').setView([13.0827, 80.2707], 5);
+   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 15,
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+  var hotspots = [
+            {
+    "name": "Araku Valley",
+ "lat": 18.358436,
+  "lng": 82.865089,
+        "description": "Araku Valley is a mesmerizing destination located in the Chittoor district of Andhra Pradesh, India. Surrounded by lush greenery and a dense forest, it offers a serene natural experience and is known for its scenic beauty and tranquil ambiance.",
+    "image": "araku.jpg"
+}
+];
+            hotspots.forEach(function (hotspot) {
+                var marker = L.marker([hotspot.lat, hotspot.lng]).addTo(map);
+                marker.bindPopup(
+                    `<b>${hotspot.name}</b><img class='popup-image' src='${hotspot.image}' alt='${hotspot.name}'><br><p>${hotspot.description}</p>`
+                );
+            });
+        });
+    </script>
+</body>
+</html>
