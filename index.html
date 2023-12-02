@@ -1,17 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>test</title>
+    <title>LocalStorage Example</title>
 </head>
-<style>
-
-</style>
 <body>
-    <h1 id="demo"></h1>
-    <button id="add">add</button>
-    <button id="rem">remove</button>
-    <script src="index.js"></script>
+    <h1>Add Data to LocalStorage</h1>
+    
+    <form id="myForm">
+        <label for="data">Enter Data:</label>
+        <input type="text" id="data" name="data">
+        <button type="submit">Submit</button>
+    </form>
+
+    <h2>Data in LocalStorage</h2>
+    <ul id="dataList"></ul> <!-- This is the list element -->
+
+    <script>
+        // Function to display data from localStorage in the list
+        function displayData() {
+            const dataList = document.getElementById('dataList');
+            dataList.innerHTML = ''; // Clear existing list items
+
+            // Retrieve data from localStorage
+            const existingData = JSON.parse(localStorage.getItem('myData')) || [];
+
+            // Loop through the data and create list items
+            existingData.forEach(function (item) {
+                const listItem = document.createElement('li');
+                listItem.textContent = item;
+                dataList.appendChild(listItem);
+            });
+        }
+
+        // Add a submit event listener to the form
+        document.getElementById('myForm').addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent the default form submission
+
+            // Get the user input
+            const userInput = document.getElementById('data').value;
+
+            // Check if userInput is not empty
+            if (userInput.trim() !== '') {
+                // Retrieve existing data from localStorage or initialize an empty array
+                const existingData = JSON.parse(localStorage.getItem('myData')) || [];
+
+                // Add the user input to the array
+                existingData.push(userInput);
+
+                // Store the updated array back in localStorage
+                localStorage.setItem('myData', JSON.stringify(existingData));
+
+                // Clear the form input
+                document.getElementById('data').value = '';
+
+                // Display updated data in the list
+                displayData();
+
+                // Optionally, display a message to the user
+                alert('Data added to localStorage.');
+            } else {
+                alert('Please enter some data.');
+            }
+        });
+
+        // Initial call to display existing data
+        displayData();
+    </script>
 </body>
 </html>
