@@ -1,0 +1,43 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Page</title>
+</head>
+<body>
+    <h1>Payment Page</h1>
+    <form id="paymentForm">
+        <label for="amount">Amount:</label>
+        <input type="number" name="amount" required><br>
+        <label for="cardNumber">Card Number:</label>
+        <input type="text" name="cardNumber" required><br>
+        <label for="expiryDate">Expiry Date:</label>
+        <input type="text" name="expiryDate" required><br>
+        <label for="cvv">CVV:</label>
+        <input type="text" name="cvv" required><br>
+        <button type="button" onclick="submitPayment()">Submit Payment</button>
+    </form>
+
+    <script>
+        function submitPayment() {
+            const form = document.getElementById('paymentForm');
+            const formData = new FormData(form);
+
+            fetch('http://localhost:3000/api/payment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(Object.fromEntries(formData)),
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
